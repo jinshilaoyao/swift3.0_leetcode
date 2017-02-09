@@ -178,6 +178,52 @@ func binarySearch(A: [Int], low: Int, high: Int, key: Int) -> Int {
     return low
 }
 
+/*
+现在给你两个这样结构的链表，请输出它们求和之后的结果。例如：
+
+输入: (2 -> 4 -> 1) + (5 -> 6 -> 1)
+输出: 7 -> 0 -> 3
+ 
+ */
+
+private class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    public init(_ val: Int) {
+        self.val = val
+        self.next = nil
+    }
+}
+
+private class Solution {
+    private func getNodeValue(_ node: ListNode?) -> Int {
+        return node.flatMap{ $0.val } ?? 0
+    }
+    
+    func addTwoNumber(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+        
+//        guard let l1 = l1, let l2 = l2 else {
+//            return nil
+//        }
+        var p1 = l1
+        var p2 = l2
+        let result: ListNode? = ListNode(0)
+        var current = result
+        var extra = 0
+        
+        while p1 != nil || p2 != nil || extra != 0 {
+            var tot = getNodeValue(p1) + getNodeValue(p2) + extra
+            extra = tot / 10
+            tot = tot % 10
+            let sum: ListNode? = ListNode(tot)
+            current?.next = sum
+            current = sum
+            p1 = p1.flatMap { $0.next }
+            p2 = p2.flatMap { $0.next }
+        }
+        return nil
+    }
+}
 
 
 
